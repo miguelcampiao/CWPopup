@@ -243,16 +243,29 @@ NSString const *CWPopupViewOffset = @"CWPopupViewOffset";
         viewControllerToPresent.view.layer.shadowOpacity = 0.8f;
         viewControllerToPresent.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:viewControllerToPresent.view.layer.bounds].CGPath;
         // rounded corners
-        viewControllerToPresent.view.layer.cornerRadius = 5.0f;
+        viewControllerToPresent.view.layer.cornerRadius = self.cornerRadius;
         // blurview
         if (self.useBlurForPopup) {
             [self addBlurView];
         } else {
             UIView *fadeView = [UIImageView new];
             if (self.isPortraitOrientation || NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) {
-                fadeView.frame = [UIScreen mainScreen].bounds;
+                if ( CGRectEqualToRect(self.fadeViewFrame, CGRectZero) ) {
+                    fadeView.frame = [UIScreen mainScreen].bounds;
+                }
+                else {
+                    fadeView.frame = self.fadeViewFrame;
+                }
             } else {
-                fadeView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+                if ( CGRectEqualToRect(self.fadeViewFrame, CGRectZero) ) {
+                    fadeView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
+                }
+                else {
+                    fadeView.frame = CGRectMake(self.fadeViewFrame.origin.y,
+                                                self.fadeViewFrame.origin.x,
+                                                self.fadeViewFrame.size.height,
+                                                self.fadeViewFrame.size.width);
+                }
             }
             fadeView.backgroundColor = [UIColor blackColor];
             fadeView.alpha = 0.0f;

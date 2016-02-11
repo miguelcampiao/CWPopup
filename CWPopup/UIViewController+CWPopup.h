@@ -14,6 +14,9 @@
 @property (nonatomic, readwrite) BOOL useBlurForPopup;
 @property (nonatomic, readwrite) CGPoint popupViewOffset;
 
+@property (nonatomic, readwrite) CGFloat cornerRadius;
+@property (nonatomic, readwrite) CGRect fadeViewFrame;
+
 - (void)presentPopupViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion;
 - (void)dismissPopupViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion;
 - (void)setUseBlurForPopup:(BOOL)useBlurForPopup;

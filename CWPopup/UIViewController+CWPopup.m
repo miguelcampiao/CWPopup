@@ -161,6 +161,8 @@ NSString const *CWPopupKey = @"CWPopupkey";
 NSString const *CWBlurViewKey = @"CWFadeViewKey";
 NSString const *CWUseBlurForPopup = @"CWUseBlurForPopup";
 NSString const *CWPopupViewOffset = @"CWPopupViewOffset";
+NSString const *CWPopupViewCornerRadius = @"CWPopupViewCornerRadius";
+NSString const *CWPopupViewFadeViewFrame = @"CWPopupViewFadeViewFrame";
 
 @implementation UIViewController (CWPopup)
 
@@ -425,6 +427,24 @@ NSString const *CWPopupViewOffset = @"CWPopupViewOffset";
 - (CGPoint)popupViewOffset {
     NSValue *offset = objc_getAssociatedObject(self, &CWPopupViewOffset);
     return [offset CGPointValue];
+}
+
+- (void)setCornerRadius:(double)cornerRadius {
+    objc_setAssociatedObject(self, &CWPopupViewCornerRadius, [NSNumber numberWithDouble:cornerRadius], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)cornerRadius {
+    NSNumber *radius = objc_getAssociatedObject(self, &CWPopupViewCornerRadius);
+    return [radius doubleValue];
+}
+
+- (void)setFadeViewFrame:(CGRect)fadeViewFrame {
+    objc_setAssociatedObject(self, &CWPopupViewFadeViewFrame, [NSValue valueWithCGRect:fadeViewFrame], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGRect)fadeViewFrame {
+    NSValue *frame = objc_getAssociatedObject(self, &CWPopupViewFadeViewFrame);
+    return [frame CGRectValue];
 }
 
 - (BOOL)isPortraitOrientation {

@@ -164,7 +164,7 @@ NSString const *CWPopupViewOffset = @"CWPopupViewOffset";
 
 @implementation UIViewController (CWPopup)
 
-@dynamic popupViewController, useBlurForPopup, popupViewOffset;
+@dynamic popupViewController, useBlurForPopup, popupViewOffset, cornerRadius, fadeViewFrame;
 
 #pragma mark - blur view methods
 

@@ -12,6 +12,7 @@
 
 @property (nonatomic, readwrite) UIViewController *popupViewController;
 @property (nonatomic, readwrite) BOOL useBlurForPopup;
+@property (nonatomic, readwrite) BOOL centerPopup;
 @property (nonatomic, readwrite) CGPoint popupViewOffset;
 
 @property (nonatomic, readwrite) double cornerRadius;

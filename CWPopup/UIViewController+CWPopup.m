@@ -163,6 +163,7 @@ NSString const *CWUseBlurForPopup = @"CWUseBlurForPopup";
 NSString const *CWPopupViewOffset = @"CWPopupViewOffset";
 NSString const *CWPopupViewCornerRadius = @"CWPopupViewCornerRadius";
 NSString const *CWPopupViewFadeViewFrame = @"CWPopupViewFadeViewFrame";
+NSString const *CWPopupViewCenterView = @"CWPopupViewFadeCenterView";
 
 @implementation UIViewController (CWPopup)
 
@@ -239,11 +240,11 @@ NSString const *CWPopupViewFadeViewFrame = @"CWPopupViewFadeViewFrame";
         }
 #endif
         // shadow setup
-        viewControllerToPresent.view.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-        viewControllerToPresent.view.layer.shadowColor = [UIColor blackColor].CGColor;
-        viewControllerToPresent.view.layer.shadowRadius = 3.0f;
-        viewControllerToPresent.view.layer.shadowOpacity = 0.8f;
-        viewControllerToPresent.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:viewControllerToPresent.view.layer.bounds].CGPath;
+//        viewControllerToPresent.view.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+//        viewControllerToPresent.view.layer.shadowColor = [UIColor blackColor].CGColor;
+//        viewControllerToPresent.view.layer.shadowRadius = 3.0f;
+//        viewControllerToPresent.view.layer.shadowOpacity = 0.8f;
+//        viewControllerToPresent.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:viewControllerToPresent.view.layer.bounds].CGPath;
         // rounded corners
         viewControllerToPresent.view.layer.cornerRadius = self.cornerRadius;
         // blurview
@@ -364,7 +365,12 @@ NSString const *CWPopupViewFadeViewFrame = @"CWPopupViewFadeViewFrame";
         x = ([UIScreen mainScreen].bounds.size.height - frame.size.width)/2;
         y = ([UIScreen mainScreen].bounds.size.width - frame.size.height)/2;
     }
-    return CGRectMake(x + viewController.popupViewOffset.x, y + viewController.popupViewOffset.y, frame.size.width, frame.size.height);
+    if (self.centerPopup) {
+        return CGRectMake(x + viewController.popupViewOffset.x, y + viewController.popupViewOffset.y, frame.size.width - (2*viewController.popupViewOffset.x), frame.size.height - (2*viewController.popupViewOffset.y));
+    }
+    else {
+        return CGRectMake(x + viewController.popupViewOffset.x, y + viewController.popupViewOffset.y, frame.size.width, frame.size.height);
+    }
 }
 
 - (void)screenOrientationChanged {
@@ -418,6 +424,15 @@ NSString const *CWPopupViewFadeViewFrame = @"CWPopupViewFadeViewFrame";
     NSNumber *result = objc_getAssociatedObject(self, &CWUseBlurForPopup);
     return [result boolValue];
 
+}
+
+- (void)setCenterPopup:(BOOL)centerPopup {
+    objc_setAssociatedObject(self, &CWPopupViewCenterView, [NSNumber numberWithBool:NO], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL) centerPopup {
+    NSNumber *result = objc_getAssociatedObject(self, &CWPopupViewCenterView);
+    return [result boolValue];
 }
 
 - (void)setPopupViewOffset:(CGPoint)popupViewOffset {

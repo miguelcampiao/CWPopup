@@ -365,7 +365,7 @@ NSString const *CWPopupViewCenterView = @"CWPopupViewFadeCenterView";
         x = ([UIScreen mainScreen].bounds.size.height - frame.size.width)/2;
         y = ([UIScreen mainScreen].bounds.size.width - frame.size.height)/2;
     }
-    if (self.centerPopup) {
+    if (viewController.centerPopup) {
         return CGRectMake(x + viewController.popupViewOffset.x, y + viewController.popupViewOffset.y, frame.size.width - (2*viewController.popupViewOffset.x), frame.size.height - (2*viewController.popupViewOffset.y));
     }
     else {
@@ -427,7 +427,7 @@ NSString const *CWPopupViewCenterView = @"CWPopupViewFadeCenterView";
 }
 
 - (void)setCenterPopup:(BOOL)centerPopup {
-    objc_setAssociatedObject(self, &CWPopupViewCenterView, [NSNumber numberWithBool:NO], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &CWPopupViewCenterView, [NSNumber numberWithBool:centerPopup], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL) centerPopup {
